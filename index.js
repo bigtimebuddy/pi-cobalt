@@ -25,7 +25,7 @@ const buttons = {
 };
 
 // Time in milliseconds when to accept a new press
-const block = 5000;
+const block = 20 * 1000;
 
 // Keep track of blocking time individually
 const blockers = {};
