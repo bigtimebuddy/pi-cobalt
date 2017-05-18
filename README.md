@@ -1,6 +1,6 @@
 # pi-cobalt
 
-This project started after I adopted a new puppy, Cobalt. My girlfriend, being a scientist, wanted a way to track the times when the puppy peed, pooped, went for a walk or was feed. I hooked up a Rasberry Pi Zero W to a few buttons and then created this NodeJS app to send events to a Google Calendar.
+This project started after I adopted a new puppy, Cobalt. My girlfriend, being a scientist, wanted a way to track the times when the puppy peed, pooped, went for a walk or was feed. I hooked up a Rasberry Pi Zero W to a few buttons and then created this NodeJS app to send events to IFTTT.
 
 ## Hardware
 
@@ -47,14 +47,37 @@ git clone git@github.com:bigtimebuddy/pi-cobalt.git
 cd ~/projects/pi-cobalt
 npm install
 ```
-* Test the script to make sure it works. Clicking on one of the four physical buttons should echo on the command-line.
-```bash
-sudo node .
-# Press ctrl + c to exit process
-```
 * Add the application to **/etc/rc.local**, to make sure it starts up whenever the Pi Zero reboots 
 ```bash
 sudo nano /etc/rc.local
 # add the following line before "exit 0"
 /usr/local/bin/node /home/pi/projects/pi-cobalt &
+```
+
+## Setup IFTTT Maker Hooks
+
+* Login to [IFTTT](https://ifttt.com)
+* Go to My Applets > New Applet
+* Click on **+ this** and select Maker Webhooks
+* Click "Receive a web request"
+* In the action field provide one of the following games:
+    * `cobalt_pee`
+    * `cobalt_walk`
+    * `cobalt_feed`
+    * `cobalt_poop`
+* Select the trigger clicking on **+ then** (I setup an SMS message to test)
+* Go to [Maker Webhooks](https://ifttt.com/maker_webhooks) and click on "Documentation"
+* Copy and paste whatever follows "Your key is:" 
+* Add the key to your project, where "abcdefghijklmnopqrstuv" is your key
+```
+echo "abcdefghijklmnopqrstuv" > ~/projects/pi-cobalt/ifttt.key
+```
+
+## Test Application
+
+Test the script to make sure it works. Clicking on one of the four physical buttons should echo on the command-line. If everything goes well, you should receive a notification from the IFTTT trigger you setup.
+
+```bash
+sudo node .
+# Press ctrl + c to exit process
 ```

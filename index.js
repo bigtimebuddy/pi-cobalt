@@ -2,9 +2,19 @@
 const {Gpio} = require('onoff');
 const fs = require('fs');
 const path = require('path');
+const http = require('http');
 
 // Create a log file
-const log = path.resolve(__dirname, 'output.log');
+const logFile = path.resolve(__dirname, 'output.log');
+const keyFile = path.resolve(__dirname, 'ifttt.key');
+
+if (!fs.existsSync(keyFile)) {
+	console.log(`Missing IFTTT key file`);
+	process.exit(1);
+}
+
+// Get the key from file
+const key = fs.readFileSync(keyFile, 'utf8');
 
 // Contain each of the GPIO number for each button
 const buttons = {
@@ -43,7 +53,30 @@ function onPress(id, err, value) {
 		blockers[id] = now + block;
 		
 		const date = (new Date(now)).toLocaleTimeString();
-		fs.appendFileSync(log, `[${date}] ${id}\n`);
+		fs.appendFileSync(logFile, `[${date}] ${id}\n`);
 		console.log(`[${date}] ${id}`);
+		webhookPost(id);
 	}
+}
+
+// Post to IFTTT to be intercepted
+function webhookPost(id) {
+	
+	const options = {
+		host: 'maker.ifttt.com',
+		port: '443',
+		path: `/trigger/cobalt_${id}/with/key/${key}`,
+		method: 'POST'
+	};
+
+	// Set up the request
+	const request = http.request(options, (result) => {
+		result.setEncoding('utf8');
+		result.on('data', (chunk) => {
+			console.log('Response: ' + chunk);
+		});
+	});
+
+	// Post
+	request.end();
 }
