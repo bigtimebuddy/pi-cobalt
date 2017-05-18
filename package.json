@@ -1,13 +1,14 @@
 {
-  "name": "cobalt-calendar-app",
+  "name": "pi-cobalt",
   "version": "1.0.0",
+  "private": "true",
   "description": "Report times when Cobalt poops, pees, walks or feeds",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Matt Karl <matt@mattkarl.com>",
+  "license": "MIT",
   "dependencies": {
     "onoff": "^1.1.2"
   }

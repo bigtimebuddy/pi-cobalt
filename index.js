@@ -1,4 +1,4 @@
-
+// Require dependencies
 const {Gpio} = require('onoff');
 const fs = require('fs');
 const path = require('path');
@@ -27,6 +27,7 @@ for (const id in buttons) {
 	
 	button.watch(onPress.bind(null, id));
 	
+	// Set a default blocker
 	blockers[id] = Date.now();
 }
 
