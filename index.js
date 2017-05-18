@@ -14,7 +14,7 @@ if (!fs.existsSync(keyFile)) {
 }
 
 // Get the key from file
-const key = fs.readFileSync(keyFile, 'utf8');
+const key = fs.readFileSync(keyFile, 'utf8').trim();
 
 // Contain each of the GPIO number for each button
 const buttons = {
@@ -61,7 +61,7 @@ function onPress(id, err, value) {
 
 // Post to IFTTT to be intercepted
 function webhookPost(id) {
-	
+
 	const options = {
 		host: 'maker.ifttt.com',
 		port: '443',
