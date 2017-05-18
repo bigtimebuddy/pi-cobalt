@@ -63,8 +63,8 @@ function onPress(id, err, value) {
 function webhookPost(id) {
 
 	const options = {
+		port: '80',
 		host: 'maker.ifttt.com',
-		port: '443',
 		path: `/trigger/cobalt_${id}/with/key/${key}`,
 		method: 'POST'
 	};
