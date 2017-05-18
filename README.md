@@ -49,7 +49,7 @@ npm install
 ```
 * Test the script to make sure it works. Clicking on one of the four physical buttons should echo on the command-line.
 ```bash
-npm start
+sudo node .
 # Press ctrl + c to exit process
 ```
 * Add the application to **/etc/rc.local**, to make sure it starts up whenever the Pi Zero reboots 
