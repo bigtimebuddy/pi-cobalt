@@ -51,12 +51,29 @@ function onPress(id, err, value) {
 		
 		// Block until a few seconds from now
 		blockers[id] = now + block;
-		
-		const date = (new Date(now)).toLocaleTimeString();
-		fs.appendFileSync(logFile, `[${date}] ${id}\n`);
-		console.log(`[${date}] ${id}`);
+
+		log(id);
 		webhookPost(id);
 	}
+}
+
+// Log function to set to log file
+// as well as the console
+function log(message) {
+
+	// Create timestamp
+	const now = new Date();
+	const date = now.toLocaleDateString();
+	const time = now.toLocaleTimeString();
+
+	// Format the message
+	message = `[${date} ${time}] ${message}`;
+
+	// Add to the log file
+	fs.appendFileSync(logFile, message + '\n');
+
+	// Add to console
+	console.log(message);
 }
 
 // Post to IFTTT to be intercepted
@@ -72,9 +89,7 @@ function webhookPost(id) {
 	// Set up the request
 	const request = http.request(options, (result) => {
 		result.setEncoding('utf8');
-		result.on('data', (chunk) => {
-			console.log('Response: ' + chunk);
-		});
+		result.on('data', log);
 	});
 
 	// Post
