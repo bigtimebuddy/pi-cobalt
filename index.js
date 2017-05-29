@@ -30,13 +30,17 @@ const block = 20 * 1000;
 // Keep track of blocking time individually
 const blockers = {};
 
+// Collection of buttons
+const buttonList = [];
+
 // Setup the buttons
 for (const id in buttons) {
 	
 	const button = new Gpio(buttons[id], 'in', 'both');
 	
 	button.watch(onPress.bind(null, id));
-	
+	buttonList.push(button);
+
 	// Set a default blocker
 	blockers[id] = Date.now();
 }
@@ -95,3 +99,10 @@ function webhookPost(id) {
 	// Post
 	request.end();
 }
+
+// Clean up buttons on exit
+process.on('SIGINT', function () {
+	buttonList.forEach((button) => {
+		button.unexport();
+	});
+});
