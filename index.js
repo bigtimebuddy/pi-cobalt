@@ -3,6 +3,7 @@ const {Gpio} = require('onoff');
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
+const querystring = require('querystring');
 
 // Create a log file
 const logFile = path.resolve(__dirname, 'output.log');
@@ -83,6 +84,11 @@ function log(message) {
 // Post to IFTTT to be intercepted
 function webhookPost(id) {
 
+	const data = querystring.stringify({
+		value1: Date.now(),
+		value2: id
+	});
+
 	const options = {
 		port: '80',
 		host: 'maker.ifttt.com',
@@ -97,6 +103,7 @@ function webhookPost(id) {
 	});
 
 	// Post
+	request.write(data);
 	request.end();
 }
 
