@@ -93,7 +93,11 @@ function webhookPost(id) {
 		port: '80',
 		host: 'maker.ifttt.com',
 		path: `/trigger/cobalt_${id}/with/key/${key}`,
-		method: 'POST'
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Length': Buffer.byteLength(data)
+		}
 	};
 
 	// Set up the request
