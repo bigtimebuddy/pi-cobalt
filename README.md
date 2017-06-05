@@ -84,6 +84,36 @@ sudo node .
 # Press ctrl + c to exit process
 ```
 
+## Troubleshooting
+
+Initially, I was having issues with Node and the GPIO. I created this Python script to validate that my buttons were working correctly. It has sense become useful for debugging purposes. To run, save as **buttons-test.py** and run `sudo python buttons-test.py`.
+
+```python
+import time
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(26, GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(25, GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(12, GPIO.IN,pull_up_down=GPIO.PUD_UP)
+
+while True:
+	pee = GPIO.input(17)
+	poop = GPIO.input(26)
+	walk = GPIO.input(25)
+	feed = GPIO.input(12)
+	if (pee == False):
+		print("Pee");
+	if (poop == False):
+		print("Poop");
+	if (walk == False):
+		print("Walk");
+	if (feed == False):
+		print("Feed");
+	
+	time.sleep(0.3);
+```
+
 ## Shout-out
 
 Thanks for my friend Chris who helped me fabricate the fancy wooden box.
