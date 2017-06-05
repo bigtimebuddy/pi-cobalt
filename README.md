@@ -1,5 +1,7 @@
 # pi-cobalt
 
+![Preview Image](https://raw.github.com/bigtimebuddy/pi-cobalt/master/preview.jpg)
+
 This project started after I adopted a new puppy, Cobalt. My girlfriend, being a scientist, wanted a way to track the times when the puppy peed, pooped, went for a walk or was feed. I hooked up a Rasberry Pi Zero W to a few buttons and then created this NodeJS app to send events to IFTTT.
 
 ## Hardware
@@ -81,3 +83,7 @@ Test the script to make sure it works. Clicking on one of the four physical butt
 sudo node .
 # Press ctrl + c to exit process
 ```
+
+## Shout-out
+
+Thanks for my friend Chris who helped me fabricate the fancy wooden box.
